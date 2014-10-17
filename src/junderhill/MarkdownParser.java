@@ -1,7 +1,11 @@
 package junderhill;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+
 import java.io.*;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Jason.Underhill on 16/10/2014.
@@ -21,7 +25,7 @@ public class MarkdownParser {
     private void PopulatePatterns() {
         patterns.put(Heading.class, "^#{1,5}.*#?");
         patterns.put(Paragraph.class, "");
-        patterns.put(ListElement.class, "");
+        patterns.put(ListElement.class, "^[\\s\\t]*\\*{1}[\\s\\t]+.*");
     }
 
     public IDocument ParseDocument() throws IOException {
@@ -40,6 +44,31 @@ public class MarkdownParser {
     }
 
     private void ParseLine(String line) {
+        for(Object key : patterns.keySet())
+        {
+            String pattern = (String)patterns.get(key);
+            Pattern p = Pattern.compile((String)pattern);
+            Matcher matcher = p.matcher(line);
+            if(matcher.find())
+            {
+                HandleMatch(matcher, line, key);
+                break;
+            }
+        }
+        Pattern pattern = Pattern.compile("");
+        Matcher matcher = pattern.matcher(filename);
+    }
 
+    private void HandleMatch(Matcher matcher, String line, Object key) {
+        if(key == Heading.class)
+        {
+            CreateHeading(line);
+        }
+    }
+
+    private void CreateHeading(String line) {
+        Heading heading = new Heading();
+        heading.setValue(line.replace("#", ""));
+        document.elements.add(heading);
     }
 }

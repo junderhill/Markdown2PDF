@@ -1,12 +1,13 @@
 package junderhill;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 	    if(ValidateArguments(args))
         {
             MarkdownParser parser = new MarkdownParser(args[0]);
@@ -34,6 +35,8 @@ public class Main {
     }
 
     private static boolean IsValidFilenameFormat(String filename) {
+        return true;
+        //TODO: Write regex for filename matching
         Pattern pattern = Pattern.compile("");
         Matcher matcher = pattern.matcher(filename);
         if(matcher.find())
