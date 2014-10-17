@@ -24,7 +24,7 @@ public class MarkdownParser {
 
     private void PopulatePatterns() {
         patterns.put(Heading.class, "^#{1,5}.*#?");
-        patterns.put(Paragraph.class, "");
+        patterns.put(Paragraph.class, "^a$"); //TODO: Update this regex as it is written not to match for debugging
         patterns.put(ListElement.class, "^[\\s\\t]*\\*{1}[\\s\\t]+.*");
     }
 

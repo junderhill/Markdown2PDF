@@ -37,13 +37,13 @@ public class Main {
     private static boolean IsValidFilenameFormat(String filename) {
         return true;
         //TODO: Write regex for filename matching
-        Pattern pattern = Pattern.compile("");
+        /*Pattern pattern = Pattern.compile("");
         Matcher matcher = pattern.matcher(filename);
         if(matcher.find())
         {
             return true;
         }
-        return false;
+        return false;*/
     }
 
     private static boolean DoesFileExist(String filename)
