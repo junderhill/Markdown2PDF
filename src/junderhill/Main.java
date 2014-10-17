@@ -1,13 +1,16 @@
 package junderhill;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
     public static void main(String[] args) {
 	    if(ValidateArguments(args))
         {
-
+            MarkdownParser parser = new MarkdownParser(args[0]);
+            IDocument document = parser.ParseDocument();
         }
     }
 
@@ -17,17 +20,37 @@ public class Main {
             System.out.println("Only 1 argument can be supplied. It must be a *.md filename");
             return false;
         }
+        if (!IsValidFilenameFormat(args[0])) {
+            System.out.println("File format is invalid");
+            return false;
+        }
 
-        //TODO: Check is filename
-
-        //TODO: Check file exists.
-
+        if(!DoesFileExist(args[0]))
+        {
+            System.out.println("File does not exist");
+            return false;
+        }
         return true;
+    }
+
+    private static boolean IsValidFilenameFormat(String filename) {
+        Pattern pattern = Pattern.compile("");
+        Matcher matcher = pattern.matcher(filename);
+        if(matcher.find())
+        {
+            return true;
+        }
+        return false;
     }
 
     private static boolean DoesFileExist(String filename)
     {
-        throw new NotImplementedException();
+        File file = new File(filename);
+        if(file.exists() && !file.isDirectory())
+        {
+            return true;
+        }
+        return false;
     }
 
 }
